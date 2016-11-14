@@ -9,16 +9,54 @@ package com.myproject.pocketclinic;
  *
  * @author Souvik Das
  */
+import Priaid.Diagnosis.Client.DiagnosisClient;
+import Priaid.Diagnosis.Model.*;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JLabel;
+import javax.swing.ListModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 public class JFrame_Home extends javax.swing.JFrame
 {
-
+    private List<HealthItem> g_symptom_list;
+    private List<HealthItem> g_issue_list;
+    
     /**
      * Creates new form JFrame_Home
      */
     public JFrame_Home()
-    {
+    {        
         initComponents();
+        
+        try
+        {
+            // Pre-fetch Medical Data
+            g_symptom_list = pocketclinic.dc_obj.loadSymptoms();
+            g_issue_list = pocketclinic.dc_obj.loadIssues();
+            
+            // Prepare Predict - Symptom List
+            DefaultListModel jList_Predict_SelectSymptoms_Model = new DefaultListModel();
+            jList_Predict_SelectSymptoms.setModel(jList_Predict_SelectSymptoms_Model);
+            for(HealthItem x: g_symptom_list)
+                jList_Predict_SelectSymptoms_Model.addElement(x);
+            
+            // Prepare Predict - Output Table Model
+            final DefaultTableModel model = (DefaultTableModel) jTable_Predict_Output.getModel();
+            model.setNumRows(0);
+            final DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+            render.setHorizontalAlignment(JLabel.CENTER);
+            render.setVerticalAlignment(JLabel.CENTER);
+            jTable_Predict_Output.setDefaultRenderer(String.class, render);
+            jTable_Predict_Output.setDefaultRenderer(Integer.class, render);
+            jTable_Predict_Output.setDefaultRenderer(Double.class, render);
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -50,19 +88,19 @@ public class JFrame_Home extends javax.swing.JFrame
         jButton_Cases_Open = new javax.swing.JButton();
         jButton_Cases_Add = new javax.swing.JButton();
         jPanel_Predict = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jYearChooser1 = new com.toedter.calendar.JYearChooser();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jPanel_Predict_SelectSymptoms = new javax.swing.JPanel();
+        jScrollPane_Predict_SelectSymptoms = new javax.swing.JScrollPane();
+        jList_Predict_SelectSymptoms = new javax.swing.JList<>();
+        jPanel_Predicut_Output = new javax.swing.JPanel();
+        jScrollPane_Predict_Output = new javax.swing.JScrollPane();
+        jTable_Predict_Output = new javax.swing.JTable();
+        jLabel_Predict_BirthYear = new javax.swing.JLabel();
+        jLabel_Predict_Gender = new javax.swing.JLabel();
+        jYearChooser_Predict = new com.toedter.calendar.JYearChooser();
+        jRadioButton_Predict_Male = new javax.swing.JRadioButton();
+        jRadioButton_Predict_Female = new javax.swing.JRadioButton();
+        jButton_Predict_Predict = new javax.swing.JButton();
+        jButton_Predict_Open = new javax.swing.JButton();
         jPanel_Ranking = new javax.swing.JPanel();
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -85,6 +123,13 @@ public class JFrame_Home extends javax.swing.JFrame
         jTabbedPane_Home.setFont(new java.awt.Font("Lucida Sans", 0, 12)); // NOI18N
         jTabbedPane_Home.setMaximumSize(new java.awt.Dimension(600, 400));
         jTabbedPane_Home.setMinimumSize(new java.awt.Dimension(600, 400));
+        jTabbedPane_Home.addChangeListener(new javax.swing.event.ChangeListener()
+        {
+            public void stateChanged(javax.swing.event.ChangeEvent evt)
+            {
+                jTabbedPane_HomeStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel_Search_UserLayout = new javax.swing.GroupLayout(jPanel_Search_User);
         jPanel_Search_User.setLayout(jPanel_Search_UserLayout);
@@ -220,70 +265,75 @@ public class JFrame_Home extends javax.swing.JFrame
 
         jTabbedPane_Home.addTab("Cases", jPanel_Cases);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Symptoms"));
+        jPanel_Predict_SelectSymptoms.setBorder(javax.swing.BorderFactory.createTitledBorder("Select Symptoms"));
+        jPanel_Predict_SelectSymptoms.setLayout(new java.awt.BorderLayout());
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>()
-        {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jList1.setMinimumSize(new java.awt.Dimension(32, 80));
-        jList1.setPreferredSize(new java.awt.Dimension(32, 80));
-        jScrollPane3.setViewportView(jList1);
+        jScrollPane_Predict_SelectSymptoms.setViewportView(jList_Predict_SelectSymptoms);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
-        );
+        jPanel_Predict_SelectSymptoms.add(jScrollPane_Predict_SelectSymptoms, java.awt.BorderLayout.CENTER);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Output"));
+        jPanel_Predicut_Output.setBorder(javax.swing.BorderFactory.createTitledBorder("Output"));
+        jPanel_Predicut_Output.setLayout(new java.awt.BorderLayout());
 
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Predict_Output.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
 
             },
             new String []
             {
-
+                "Disease", "Accuracy %"
             }
-        ));
-        jScrollPane6.setViewportView(jTable5);
+        )
+        {
+            Class[] types = new Class []
+            {
+                java.lang.Object.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean []
+            {
+                false, false
+            };
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 281, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-        );
+            public Class getColumnClass(int columnIndex)
+            {
+                return types [columnIndex];
+            }
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setText("Birth Year");
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable_Predict_Output.setColumnSelectionAllowed(true);
+        jScrollPane_Predict_Output.setViewportView(jTable_Predict_Output);
+        jTable_Predict_Output.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Gender");
+        jPanel_Predicut_Output.add(jScrollPane_Predict_Output, java.awt.BorderLayout.CENTER);
 
-        jYearChooser1.setYear(2000);
+        jLabel_Predict_BirthYear.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_Predict_BirthYear.setText("Birth Year");
 
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Male");
+        jLabel_Predict_Gender.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel_Predict_Gender.setText("Gender");
 
-        jRadioButton2.setText("Female");
+        jYearChooser_Predict.setYear(2000);
 
-        jButton1.setText("Predict");
+        jRadioButton_Predict_Male.setSelected(true);
+        jRadioButton_Predict_Male.setText("Male");
 
-        jButton3.setText("Open");
+        jRadioButton_Predict_Female.setText("Female");
+
+        jButton_Predict_Predict.setText("Predict");
+        jButton_Predict_Predict.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton_Predict_PredictActionPerformed(evt);
+            }
+        });
+
+        jButton_Predict_Open.setText("Open");
 
         javax.swing.GroupLayout jPanel_PredictLayout = new javax.swing.GroupLayout(jPanel_Predict);
         jPanel_Predict.setLayout(jPanel_PredictLayout);
@@ -293,25 +343,25 @@ public class JFrame_Home extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_PredictLayout.createSequentialGroup()
-                        .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel_PredictLayout.createSequentialGroup()
+                        .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel_PredictLayout.createSequentialGroup()
                                 .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3))
+                                    .addComponent(jLabel_Predict_BirthYear)
+                                    .addComponent(jLabel_Predict_Gender))
                                 .addGap(18, 18, 18)
-                                .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel_PredictLayout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jRadioButton2))
-                                    .addComponent(jYearChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jRadioButton_Predict_Male)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jRadioButton_Predict_Female))
+                                    .addComponent(jYearChooser_Predict, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jPanel_Predict_SelectSymptoms, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel_Predicut_Output, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE))
                     .addGroup(jPanel_PredictLayout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(jButton_Predict_Predict)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)))
+                        .addComponent(jButton_Predict_Open)))
                 .addContainerGap())
         );
         jPanel_PredictLayout.setVerticalGroup(
@@ -321,20 +371,20 @@ public class JFrame_Home extends javax.swing.JFrame
                 .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_PredictLayout.createSequentialGroup()
                         .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jYearChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel_Predict_BirthYear)
+                            .addComponent(jYearChooser_Predict, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(9, 9, 9)
                         .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jLabel3))
+                            .addComponent(jRadioButton_Predict_Male)
+                            .addComponent(jRadioButton_Predict_Female)
+                            .addComponent(jLabel_Predict_Gender))
                         .addGap(7, 7, 7)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel_Predict_SelectSymptoms, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel_Predicut_Output, javax.swing.GroupLayout.DEFAULT_SIZE, 344, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel_PredictLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(jButton_Predict_Predict)
+                    .addComponent(jButton_Predict_Open))
                 .addContainerGap())
         );
 
@@ -456,6 +506,69 @@ public class JFrame_Home extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton_Predict_PredictActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton_Predict_PredictActionPerformed
+    {//GEN-HEADEREND:event_jButton_Predict_PredictActionPerformed
+        List temp = jList_Predict_SelectSymptoms.getSelectedValuesList();
+        ArrayList<Integer> selected_symptoms = new ArrayList<Integer>();
+        for(Object x: temp)
+            selected_symptoms.add(((HealthItem) x).ID);
+        Gender selected_gender = jRadioButton_Predict_Male.isSelected() ? Gender.Male : Gender.Female;
+        Integer selected_year = jYearChooser_Predict.getValue();
+        try
+        {
+            List<HealthDiagnosis> temp2 =
+                pocketclinic.dc_obj.loadDiagnosis(selected_symptoms, selected_gender, selected_year);
+            DefaultTableModel model = (DefaultTableModel)jTable_Predict_Output.getModel();
+            model.setNumRows(0);
+            for(HealthDiagnosis x: temp2)
+            {
+                model.addRow
+                (
+                    new Object[]
+                    {
+                        x.Issue,
+                        x.Issue.Accuracy
+                    }
+                );
+            }
+        }
+        catch(Exception e)
+        {
+            
+        }
+    }//GEN-LAST:event_jButton_Predict_PredictActionPerformed
+
+    private void jTabbedPane_HomeStateChanged(javax.swing.event.ChangeEvent evt)//GEN-FIRST:event_jTabbedPane_HomeStateChanged
+    {//GEN-HEADEREND:event_jTabbedPane_HomeStateChanged
+        switch(jTabbedPane_Home.getSelectedIndex())
+        {
+            case 0:
+            {
+                
+            } break;
+            case 1:
+            {
+                
+            } break;
+            case 2:
+            {
+                
+            } break;
+            case 3:
+            {
+                
+            } break;
+            case 4:
+            {
+
+            } break;
+            case 5:
+            {
+                
+            } break;
+        }
+    }//GEN-LAST:event_jTabbedPane_HomeStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -465,39 +578,39 @@ public class JFrame_Home extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton_Cases_Add;
     private javax.swing.JButton jButton_Cases_Open;
+    private javax.swing.JButton jButton_Predict_Open;
+    private javax.swing.JButton jButton_Predict_Predict;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel jLabel_Predict_BirthYear;
+    private javax.swing.JLabel jLabel_Predict_Gender;
+    private javax.swing.JList<String> jList_Predict_SelectSymptoms;
     private javax.swing.JPanel jPanel_Cases;
     private javax.swing.JPanel jPanel_Cases_Active;
     private javax.swing.JPanel jPanel_Cases_Closed;
     private javax.swing.JPanel jPanel_NearbyPlaces;
     private javax.swing.JPanel jPanel_Predict;
+    private javax.swing.JPanel jPanel_Predict_SelectSymptoms;
+    private javax.swing.JPanel jPanel_Predicut_Output;
     private javax.swing.JPanel jPanel_Profile_Doctor;
     private javax.swing.JPanel jPanel_Profile_Patient;
     private javax.swing.JPanel jPanel_Profile_Settings;
     private javax.swing.JPanel jPanel_Ranking;
     private javax.swing.JPanel jPanel_Search_Case;
     private javax.swing.JPanel jPanel_Search_User;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButton_Predict_Female;
+    private javax.swing.JRadioButton jRadioButton_Predict_Male;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane_Predict_Output;
+    private javax.swing.JScrollPane jScrollPane_Predict_SelectSymptoms;
     private javax.swing.JTabbedPane jTabbedPane_Cases;
     private javax.swing.JTabbedPane jTabbedPane_Home;
     private javax.swing.JTabbedPane jTabbedPane_Profile;
@@ -506,11 +619,11 @@ public class JFrame_Home extends javax.swing.JFrame
     private javax.swing.JTable jTable2;
     private javax.swing.JTable jTable3;
     private javax.swing.JTable jTable4;
-    private javax.swing.JTable jTable5;
+    private javax.swing.JTable jTable_Predict_Output;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private com.toedter.calendar.JYearChooser jYearChooser1;
+    private com.toedter.calendar.JYearChooser jYearChooser_Predict;
     // End of variables declaration//GEN-END:variables
 }

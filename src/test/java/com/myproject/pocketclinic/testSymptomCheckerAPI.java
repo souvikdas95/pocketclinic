@@ -3,7 +3,6 @@ package com.myproject.pocketclinic;
 import Priaid.Diagnosis.Client.*;
 import Priaid.Diagnosis.Model.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,44 +21,55 @@ public class testSymptomCheckerAPI
         try
         {
             ODC = new DiagnosisClient(USERNAME, PASSWORD, AUTHURL, LANGUAGE, HEALTHURL);
-
+            
             // Load All Symptoms
-            HashSet<String> SpecialisationList = new HashSet<String>();
             List<HealthItem> OSymptoms = ODC.loadSymptoms();
+            /*for (HealthItem x : OSymptoms)
+            {
+                System.out.println(x.ID + " " + x.Name);
+            }*/
+            
+            // Load All Issues / Diseases
+            List<HealthItem> OIssues = ODC.loadIssues();
+            /*for (HealthItem x : OIssues)
+            {
+                System.out.println(x.ID + " " + x.Name);
+            }*/
+            
+            // Selected Symptoms
+            System.out.println("Assuming Symptoms: Fever, Cough, Running nose, Sneezing . . .");
+            List<Integer> OSelectedSymptoms = new ArrayList<Integer>();
             for (HealthItem x : OSymptoms)
             {
-                /*System.out.println(x.ID + " " + x.Name);*/
-                ArrayList<Integer> temp = new ArrayList();
-                temp.add(x.ID);
-                List<HealthDiagnosis> ODiagnosis = ODC.loadDiagnosis(temp,
-                                                     Gender.Male,
-                                                     0);
-                for (HealthDiagnosis y:ODiagnosis)
-                {
-                    List<MatchedSpecialisation> temp2 = y.Specialisation;
-                    for (MatchedSpecialisation z:temp2)
-                    {
-                        SpecialisationList.add(z.Name);
-                    }
-                }
-                /*ODiagnosis = ODC.loadDiagnosis(temp,
-                                                Gender.Female,
-                                                0);
-                for (HealthDiagnosis y:ODiagnosis)
-                {
-                    List<MatchedSpecialisation> temp2 = y.Specialisation;
-                    for (MatchedSpecialisation z:temp2)
-                    {
-                        SpecialisationList.add(z.Name);
-                    }
-                }*/
+                if(x.Name.equalsIgnoreCase("Fever") ||
+                   x.Name.equalsIgnoreCase("Cough") ||
+                   x.Name.equalsIgnoreCase("Runny nose") ||
+                   x.Name.equalsIgnoreCase("Sneezing"))
+                    OSelectedSymptoms.add(x.ID);
             }
-            for (String xyz: SpecialisationList)
+            List<HealthDiagnosis> ODiagnosis = ODC.loadDiagnosis(OSelectedSymptoms,
+                                                                 Gender.Male,
+                                                                 1995);
+            for (HealthDiagnosis x : ODiagnosis)
             {
-                System.out.println(xyz);
+                DiagnosedIssue x1 = x.Issue;
+                HealthIssueInfo x3 = ODC.loadIssueInfo(x1.ID);
+                System.out.print("Issue: " + x1.Name + " (" + x1.Accuracy + "%) (Rank " + x1.Ranking + ") - ");
+                List<MatchedSpecialisation> x2 = x.Specialisation;
+                for(MatchedSpecialisation y:x2)
+                {
+                    System.out.print(y.Name + ", ");
+                }
+                System.out.println("\n\tPossible Symptoms: " + x3.PossibleSymptoms);
+                System.out.println("\n\tTreatment Description: " + x3.TreatmentDescription + "\n");
             }
             
-           
+            // Load All Body Locations
+            List<HealthItem> OLocations = ODC.loadBodyLocations();
+            /*for (HealthItem x : OLocations)
+            {
+                System.out.println(x.ID + " " + x.Name);
+            }*/
         }
         catch(Exception e)
         {

@@ -2,7 +2,7 @@ package Priaid.Diagnosis.Model;
 
 public class HealthItem
 {
-	/// <summary>
+    /// <summary>
     /// Item ID
     /// </summary>
     public int ID;
@@ -11,4 +11,10 @@ public class HealthItem
     /// Item name
     /// </summary>
     public String Name;
+    
+    @Override
+    public String toString()
+    {
+        return Name;
+    }
 }
