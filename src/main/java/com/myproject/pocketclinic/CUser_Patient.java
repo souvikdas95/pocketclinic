@@ -9,70 +9,72 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
-public class CRoute
+public class CUser_Patient
 {
     // data
-    private int _id;
-    private String _name;
-    private int _p_id;
-    private int _level;
+    private int _user_id;
+    private byte _bloodgroup;
+    private int _total_cases;
+    private int _visibility;
     
     // constructors
-    private CRoute(int id,
-                 String name,
-                 int p_id,
-                 int level)
+    private CUser_Patient(int user_id,
+                          byte bloodgroup,
+                          int total_cases,
+                          int visibility)
     {
-        this._id = id;
-        this._name = name;
-        this._p_id = p_id;
-        this._level = level;
+        this._user_id = user_id;
+        this._bloodgroup = bloodgroup;
+        this._total_cases = total_cases;
+        this._visibility = visibility;
     }
     
-    public CRoute(CRoute parent)
+    public CUser_Patient(CUser_Patient parent)
     {
-        this._id = parent._id;
-        this._name = parent._name;
-        this._p_id = parent._p_id;
-        this._level = parent._level;
+        this._user_id = parent._user_id;
+        this._bloodgroup = parent._bloodgroup;
+        this._total_cases = parent._total_cases;
+        this._visibility = parent._visibility;
     }
     
     //public attribute access methods
-    public final int get_id()
+    public final int get_user_id()
     {
-        return _id;
+        return _user_id;
     }
     
-    public final String get_name()
+    public final byte get_bloodgroup()
     {
-        return _name;
+        return _bloodgroup;
     }
     
-    public final int get_p_id()
+    public final int get_total_cases()
     {
-        return _p_id;
+        return _total_cases;
     }
     
-    public final int get_level()
+    public final int get_visibility()
     {
-        return _level;
+        return _visibility;
     }
-
+    
     // core methods
-    public static boolean Register(String name,
-                                   int p_id,
-                                   int level)
+    public static boolean Register(int user_id,
+                                   Byte bloodgroup,
+                                   int total_cases,
+                                   int visibility)
     {
         try
         {        
             // Insert new record / Register in User Table
-            String sql = "INSERT INTO `route` " + 
-                         "(`name`, `p_id`, `level`) " +
-                         "VALUES (?, ?, ?)";
+            String sql = "INSERT INTO `user_patient` " + 
+                         "(`user_id`, `bloodgroup`, `total_cases`, `visibility`) " +
+                         "VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setString(1, name);
-            stmt.setInt(2, p_id);
-            stmt.setInt(3, level);
+            stmt.setInt(1, user_id);
+            stmt.setByte(2, bloodgroup);
+            stmt.setInt(3, total_cases);
+            stmt.setInt(4, visibility);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -91,14 +93,14 @@ public class CRoute
         return true;
     }
     
-    public static CRoute Retrieve(int id)
+    public static CUser_Patient Retrieve(int user_id)
     {
-        CRoute ret = null;
+        CUser_Patient ret = null;
         try
         {
-            String sql = "SELECT * FROM `case` WHERE `id` = ?";
+            String sql = "SELECT * FROM `user_patient` WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setInt(1, user_id);
             ResultSet rs = stmt.executeQuery();
             stmt.closeOnCompletion();
             if(!rs.next())
@@ -107,10 +109,10 @@ public class CRoute
                     rs.close();
                 return ret;
             }
-            ret = new CRoute(id,
-                             rs.getString("name"),
-                             rs.getInt("p_id"),
-                             rs.getInt("level"));
+            ret = new CUser_Patient(user_id,
+                                    rs.getByte("bloodgroup"),
+                                    rs.getInt("total_cases"),
+                                    rs.getInt("visibility"));
             if(!rs.isClosed())
                 rs.close();
         }
@@ -128,60 +130,60 @@ public class CRoute
         return ret;
     }
 
-    public final boolean commit(String name,
-                                int p_id,
-                                int level)
+    public final boolean commit(byte bloodgroup,
+                                int total_cases,
+                                int visibility)
     {
         try
         {
             int sel = 0;
-            String sql = "UPDATE `case` SET ";
-            if(!(this._name.equals(name)))
+            String sql = "UPDATE `user_patient` SET ";
+            if(!(this._bloodgroup == bloodgroup))
             {
-                sql += "`name` = ?, ";
+                sql += "`bloodgroup` = ?, ";
                 sel = sel | 1;
             }
-            if(!(this._p_id == p_id))
+            if(!(this._total_cases == total_cases))
             {
-                sql += "`p_id` = ?, ";
+                sql += "`total_cases` = ?, ";
                 sel = sel | (1 << 1);
             }
-            if(!(this._level == level))
+            if(!(this._visibility == visibility))
             {
-                sql += "`level` = ?, ";
+                sql += "`total_cases` = ?, ";
                 sel = sel | (1 << 2);
             }
             if(sel == 0)
                 return true;
             sql = sql.substring(0, sql.length() - 2);
-            sql += " WHERE `id` = ?";
+            sql += " WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
             byte count = 0;
             if((sel & 1) != 0)
             {
-                if(name == null)
-                    stmt.setNull(++count, java.sql.Types.CHAR);
+                if(bloodgroup < 0)
+                    stmt.setNull(++count, java.sql.Types.TINYINT);
                 else
-                    stmt.setString(++count, name);
-                this._name = name;
+                    stmt.setByte(++count, bloodgroup);
+                this._bloodgroup = bloodgroup;
             }
             if((sel & (1 << 1)) != 0)
             {
-                if(p_id < 1)
+                if(total_cases < 0)
                     stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
-                    stmt.setInt(++count, p_id);
-                this._p_id = p_id;
+                    stmt.setInt(++count, total_cases);
+                this._total_cases = total_cases;
             }
             if((sel & (1 << 2)) != 0)
             {
-                if(level < 0)
+                if(visibility < 0)
                     stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
-                    stmt.setInt(++count, level);
-                this._level = level;
+                    stmt.setInt(++count, visibility);
+                this._visibility = visibility;
             }
-            stmt.setInt(++count, this._id);
+            stmt.setInt(++count, this._user_id);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -200,13 +202,13 @@ public class CRoute
         return true;
     }
     
-    public static final boolean Remove(int id)
+    public static final boolean Remove(int user_id)
     {
         try
         {
-            String sql = "DELETE FROM `case` WHERE `id` = ?";
+            String sql = "DELETE FROM `user_patient` WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(0, id);
+            stmt.setInt(1, user_id);
             stmt.executeUpdate(sql);
             stmt.close();
         }

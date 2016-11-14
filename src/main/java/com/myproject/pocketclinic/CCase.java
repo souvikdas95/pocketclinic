@@ -209,7 +209,7 @@ public class CCase
             }
             if((sel & (1 << 1)) != 0)
             {
-                if(bestsolution_doctor_id == 0)
+                if(bestsolution_doctor_id < 1)
                     stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
                     stmt.setInt(++count, bestsolution_doctor_id);

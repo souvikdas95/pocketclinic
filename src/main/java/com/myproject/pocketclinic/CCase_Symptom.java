@@ -138,7 +138,7 @@ public class CCase_Symptom
             byte count = 0;
             if((sel & 1) != 0)
             {
-                if(symptom_id == 0)
+                if(symptom_id < 1)
                     stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
                     stmt.setInt(++count, symptom_id);

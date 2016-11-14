@@ -514,7 +514,10 @@ public class CUser
             }
             if((sel & (1 << 6)) != 0)
             {
-                stmt.setLong(++count, phone);
+                if(phone < 0)
+                    stmt.setNull(++count, java.sql.Types.NUMERIC);
+                else
+                    stmt.setLong(++count, phone);
                 this._phone = phone;
             }
             if((sel & (1 << 7)) != 0)
@@ -527,7 +530,10 @@ public class CUser
             }
             if((sel & (1 << 8)) != 0)
             {
-                stmt.setInt(++count, visibility);
+                if(visibility < 0)
+                    stmt.setNull(++count, java.sql.Types.INTEGER);
+                else
+                    stmt.setInt(++count, visibility);
                 this._visibility = visibility;
             }
             if((sel & (1 << 9)) != 0)

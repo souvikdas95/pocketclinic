@@ -9,70 +9,61 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
-public class CRoute
+public class CRoute_Symptom
 {
     // data
-    private int _id;
-    private String _name;
-    private int _p_id;
-    private int _level;
+    private int _route_id;
+    private int _symptom_id;
+    private int _count;
     
     // constructors
-    private CRoute(int id,
-                 String name,
-                 int p_id,
-                 int level)
+    private CRoute_Symptom(int route_id,
+                         int symptom_id,
+                         int count)
     {
-        this._id = id;
-        this._name = name;
-        this._p_id = p_id;
-        this._level = level;
+        this._route_id = route_id;
+        this._symptom_id = symptom_id;
+        this._count = count;
     }
     
-    public CRoute(CRoute parent)
+    public CRoute_Symptom(CRoute_Symptom parent)
     {
-        this._id = parent._id;
-        this._name = parent._name;
-        this._p_id = parent._p_id;
-        this._level = parent._level;
+        this._route_id = parent._route_id;
+        this._symptom_id = parent._symptom_id;
+        this._count = parent._count;
     }
     
     //public attribute access methods
-    public final int get_id()
+    public final int get_route_id()
     {
-        return _id;
+        return _route_id;
     }
     
-    public final String get_name()
+    public final int get_symptom_id()
     {
-        return _name;
+        return _symptom_id;
     }
     
-    public final int get_p_id()
+    public final int get_count()
     {
-        return _p_id;
-    }
-    
-    public final int get_level()
-    {
-        return _level;
+        return _count;
     }
 
     // core methods
-    public static boolean Register(String name,
-                                   int p_id,
-                                   int level)
+    public static boolean Register(int route_id,
+                                   int symptom_id,
+                                   int count)
     {
         try
         {        
             // Insert new record / Register in User Table
-            String sql = "INSERT INTO `route` " + 
-                         "(`name`, `p_id`, `level`) " +
+            String sql = "INSERT INTO `route_symptom` " + 
+                         "(`route_id`, `symptom_id`, `count`) " +
                          "VALUES (?, ?, ?)";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setString(1, name);
-            stmt.setInt(2, p_id);
-            stmt.setInt(3, level);
+            stmt.setInt(1, route_id);
+            stmt.setInt(2, symptom_id);
+            stmt.setInt(3, count);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -91,14 +82,15 @@ public class CRoute
         return true;
     }
     
-    public static CRoute Retrieve(int id)
+    public static CRoute_Symptom Retrieve(int route_id, int symptom_id)
     {
-        CRoute ret = null;
+        CRoute_Symptom ret = null;
         try
         {
-            String sql = "SELECT * FROM `case` WHERE `id` = ?";
+            String sql = "SELECT * FROM `route_symptom` WHERE `route_id` = ? AND `symptom_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(1, id);
+            stmt.setInt(1, route_id);
+            stmt.setInt(2, symptom_id);
             ResultSet rs = stmt.executeQuery();
             stmt.closeOnCompletion();
             if(!rs.next())
@@ -107,10 +99,9 @@ public class CRoute
                     rs.close();
                 return ret;
             }
-            ret = new CRoute(id,
-                             rs.getString("name"),
-                             rs.getInt("p_id"),
-                             rs.getInt("level"));
+            ret = new CRoute_Symptom(route_id,
+                                   symptom_id,
+                                   rs.getInt("count"));
             if(!rs.isClosed())
                 rs.close();
         }
@@ -128,60 +119,33 @@ public class CRoute
         return ret;
     }
 
-    public final boolean commit(String name,
-                                int p_id,
-                                int level)
+    public final boolean commit(int count)
     {
         try
         {
             int sel = 0;
-            String sql = "UPDATE `case` SET ";
-            if(!(this._name.equals(name)))
+            String sql = "UPDATE `route_symptom` SET ";
+            if(!(this._count == count))
             {
-                sql += "`name` = ?, ";
+                sql += "`count` = ?, ";
                 sel = sel | 1;
-            }
-            if(!(this._p_id == p_id))
-            {
-                sql += "`p_id` = ?, ";
-                sel = sel | (1 << 1);
-            }
-            if(!(this._level == level))
-            {
-                sql += "`level` = ?, ";
-                sel = sel | (1 << 2);
             }
             if(sel == 0)
                 return true;
             sql = sql.substring(0, sql.length() - 2);
-            sql += " WHERE `id` = ?";
+            sql += " WHERE `route_id` = ? AND `symptom_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            byte count = 0;
+            byte _count = 0;
             if((sel & 1) != 0)
             {
-                if(name == null)
-                    stmt.setNull(++count, java.sql.Types.CHAR);
+                if(count < 0)
+                    stmt.setNull(++_count, java.sql.Types.INTEGER);
                 else
-                    stmt.setString(++count, name);
-                this._name = name;
+                    stmt.setInt(++_count, count);
+                this._count = count;
             }
-            if((sel & (1 << 1)) != 0)
-            {
-                if(p_id < 1)
-                    stmt.setNull(++count, java.sql.Types.INTEGER);
-                else
-                    stmt.setInt(++count, p_id);
-                this._p_id = p_id;
-            }
-            if((sel & (1 << 2)) != 0)
-            {
-                if(level < 0)
-                    stmt.setNull(++count, java.sql.Types.INTEGER);
-                else
-                    stmt.setInt(++count, level);
-                this._level = level;
-            }
-            stmt.setInt(++count, this._id);
+            stmt.setInt(++_count, this._route_id);
+            stmt.setInt(++_count, this._symptom_id);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -200,13 +164,14 @@ public class CRoute
         return true;
     }
     
-    public static final boolean Remove(int id)
+    public static final boolean Remove(int route_id, int symptom_id)
     {
         try
         {
-            String sql = "DELETE FROM `case` WHERE `id` = ?";
+            String sql = "DELETE FROM `route_symptom` WHERE `route_id` = ? AND `symptom_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(0, id);
+            stmt.setInt(1, route_id);
+            stmt.setInt(2, symptom_id);
             stmt.executeUpdate(sql);
             stmt.close();
         }

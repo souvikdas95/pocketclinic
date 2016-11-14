@@ -9,72 +9,72 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
-public class CCase_Solution
+public class CUser_Doctor
 {
     // data
-    private int _case_id;
-    private int _doctor_id;
-    private int _issue_id;
-    private String _solution;
+    private int _user_id;
+    private int _bestcases;
+    private int _solvedcases;
+    private int _visibility;
     
     // constructors
-    private CCase_Solution(int case_id,
-                           int doctor_id,
-                           int issue_id,
-                           String solution)
+    private CUser_Doctor(int user_id,
+                         int bestcases,
+                         int solvedcases,
+                         int visibility)
     {
-        this._case_id = case_id;
-        this._doctor_id = doctor_id;
-        this._issue_id = issue_id;
-        this._solution = solution;
+        this._user_id = user_id;
+        this._bestcases = bestcases;
+        this._solvedcases = solvedcases;
+        this._visibility = visibility;
     }
     
-    public CCase_Solution(CCase_Solution parent)
+    public CUser_Doctor(CUser_Doctor parent)
     {
-        this._case_id = parent._case_id;
-        this._doctor_id = parent._doctor_id;
-        this._issue_id = parent._issue_id;
-        this._solution = parent._solution;
+        this._user_id = parent._user_id;
+        this._bestcases = parent._bestcases;
+        this._solvedcases = parent._solvedcases;
+        this._visibility = parent._visibility;
     }
     
     //public attribute access methods
-    public final int get_case_id()
+    public final int get_user_id()
     {
-        return _case_id;
+        return _user_id;
     }
     
-    public final int get_doctor_id()
+    public final int get_bestcases()
     {
-        return _doctor_id;
+        return _bestcases;
     }
     
-    public final int get_issue_id()
+    public final int get_solvedcases()
     {
-        return _issue_id;
+        return _solvedcases;
     }
     
-    public final String get_solution()
+    public final int get_visibility()
     {
-        return _solution;
+        return _visibility;
     }
     
     // core methods
-    public static boolean Register(int case_id,
-                                   int doctor_id,
-                                   int issue_id,
-                                   String solution)
+    public static boolean Register(int user_id,
+                                   Byte bestcases,
+                                   int solvedcases,
+                                   int visibility)
     {
         try
         {        
             // Insert new record / Register in User Table
-            String sql = "INSERT INTO `case_solution` " + 
-                         "(`case_id`, `doctor_id`, `issue_id`, `solution`) " +
+            String sql = "INSERT INTO `user_doctor` " + 
+                         "(`user_id`, `bestcases`, `solvedcases`, `visibility`) " +
                          "VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(1, case_id);
-            stmt.setInt(2, doctor_id);
-            stmt.setInt(3, issue_id);
-            stmt.setString(4, solution);
+            stmt.setInt(1, user_id);
+            stmt.setByte(2, bestcases);
+            stmt.setInt(3, solvedcases);
+            stmt.setInt(4, visibility);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -93,15 +93,14 @@ public class CCase_Solution
         return true;
     }
     
-    public static CCase_Solution Retrieve(int case_id, int doctor_id)
+    public static CUser_Doctor Retrieve(int user_id)
     {
-        CCase_Solution ret = null;
+        CUser_Doctor ret = null;
         try
         {
-            String sql = "SELECT * FROM `case_solution` WHERE `case_id` = ? AND `doctor_id` = ?";
+            String sql = "SELECT * FROM `user_doctor` WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(1, case_id);
-            stmt.setInt(2, doctor_id);
+            stmt.setInt(1, user_id);
             ResultSet rs = stmt.executeQuery();
             stmt.closeOnCompletion();
             if(!rs.next())
@@ -110,10 +109,10 @@ public class CCase_Solution
                     rs.close();
                 return ret;
             }
-            ret = new CCase_Solution(case_id,
-                                     doctor_id,
-                                     rs.getInt("issue_id"),
-                                     rs.getString("solution"));
+            ret = new CUser_Doctor(user_id,
+                                   rs.getByte("bestcases"),
+                                   rs.getInt("solvedcases"),
+                                   rs.getInt("visibility"));
             if(!rs.isClosed())
                 rs.close();
         }
@@ -131,47 +130,60 @@ public class CCase_Solution
         return ret;
     }
 
-    public final boolean commit(int issue_id,
-                                String solution)
+    public final boolean commit(int bestcases,
+                                int solvedcases,
+                                int visibility)
     {
         try
         {
             int sel = 0;
-            String sql = "UPDATE `case_solution` SET ";
-            if(!(this._issue_id == issue_id))
+            String sql = "UPDATE `user_doctor` SET ";
+            if(!(this._bestcases == bestcases))
             {
-                sql += "`bestsolution_doctor_id` = ?, ";
+                sql += "`bestcases` = ?, ";
                 sel = sel | 1;
             }
-            if(!(this._solution.equals(solution)))
+            if(!(this._solvedcases == solvedcases))
             {
-                sql += "`end_date` = ?, ";
+                sql += "`solvedcases` = ?, ";
                 sel = sel | (1 << 1);
+            }
+            if(!(this._visibility == visibility))
+            {
+                sql += "`solvedcases` = ?, ";
+                sel = sel | (1 << 2);
             }
             if(sel == 0)
                 return true;
             sql = sql.substring(0, sql.length() - 2);
-            sql += " WHERE `case_id` = ? AND `doctor_id` = ?";
+            sql += " WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
             byte count = 0;
             if((sel & 1) != 0)
             {
-                if(issue_id < 1)
+                if(bestcases < 0)
                     stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
-                    stmt.setInt(++count, issue_id);
-                this._issue_id = issue_id;
+                    stmt.setInt(++count, bestcases);
+                this._bestcases = bestcases;
             }
             if((sel & (1 << 1)) != 0)
             {
-                if(solution == null)
-                    stmt.setNull(++count, java.sql.Types.CHAR);
+                if(solvedcases < 0)
+                    stmt.setNull(++count, java.sql.Types.INTEGER);
                 else
-                    stmt.setString(++count, solution);
-                this._solution = solution;
+                    stmt.setInt(++count, solvedcases);
+                this._solvedcases = solvedcases;
             }
-            stmt.setInt(++count, this._case_id);
-            stmt.setInt(++count, this._doctor_id);
+            if((sel & (1 << 2)) != 0)
+            {
+                if(visibility < 0)
+                    stmt.setNull(++count, java.sql.Types.INTEGER);
+                else
+                    stmt.setInt(++count, visibility);
+                this._visibility = visibility;
+            }
+            stmt.setInt(++count, this._user_id);
             stmt.executeUpdate();
             stmt.close();
         }
@@ -190,14 +202,13 @@ public class CCase_Solution
         return true;
     }
     
-    public static final boolean Remove(int case_id, int doctor_id)
+    public static final boolean Remove(int user_id)
     {
         try
         {
-            String sql = "DELETE FROM `case_solution` WHERE `case_id` = ? AND `doctor_id` = ?";
+            String sql = "DELETE FROM `user_doctor` WHERE `user_id` = ?";
             PreparedStatement stmt = pocketclinic.con_obj.prepareStatement(sql);
-            stmt.setInt(0, case_id);
-            stmt.setInt(1, doctor_id);
+            stmt.setInt(1, user_id);
             stmt.executeUpdate(sql);
             stmt.close();
         }
