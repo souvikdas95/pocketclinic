@@ -9,7 +9,7 @@ public class pocketclinic
     public static Connection con_obj = null;
     
     // Database User Specification
-    private static final String szHost = "dyndomain.net";
+    private static final String szHost = "localhost";
     private static final String szPort = "3306";
     private static final String szUsername = "root";
     private static final String szPassword = "protected";
@@ -29,7 +29,7 @@ public class pocketclinic
                 szPassword
             );
             
-            Runtime.getRuntime().addShutdownHook(new Thread()
+            /*Runtime.getRuntime().addShutdownHook(new Thread()
             {
                 @Override
                 public void run()
@@ -51,7 +51,7 @@ public class pocketclinic
                         e.printStackTrace();
                     }
                 }
-            });
+            });*/
             
             java.awt.EventQueue.invokeLater(() ->{new JFrame_Login().setVisible(true);});
         }

@@ -8,15 +8,15 @@
       <Color id="Default Cursor"/>
     </Property>
     <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[400, 389]"/>
+      <Dimension value="null"/>
     </Property>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[400, 389]"/>
+      <Dimension value="[400, 345]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="Register" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
     <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[400, 339]"/>
+      <Dimension value="[400, 346]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -46,40 +46,47 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jLabel_EmailID" min="-2" pref="100" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                              <Component id="jTextField_EmailID" min="-2" pref="108" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel_Username" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                      <Component id="jLabel_Password" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jTextField_Username" min="-2" pref="108" max="-2" attributes="0"/>
-                                      <Component id="jPasswordField_Password" min="-2" pref="108" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel_Username" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="jLabel_Password" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="jLabel_Name" min="-2" pref="100" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jTextField_Username" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <Component id="jPasswordField_Password" min="-2" pref="108" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel_Name" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <Component id="jLabel_EmailID" alignment="0" min="-2" pref="100" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jTextField_EmailID" min="-2" pref="108" max="-2" attributes="0"/>
                                   <Component id="jTextField_Name" min="-2" pref="108" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jLabel_Account_Type" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel_DOB" min="-2" pref="100" max="-2" attributes="0"/>
-                                      <Component id="jButton_Back" min="-2" pref="88" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="64" pref="64" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jButton_Back" min="-2" pref="88" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jButton_Submit" min="-2" pref="88" max="-2" attributes="0"/>
-                                      <Component id="jComboBox_Account_Type" pref="108" max="32767" attributes="0"/>
-                                      <Component id="jDateChooser_DOB" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel_Account_Type" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel_DOB" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="jLabel_Gender" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace min="56" pref="56" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Component id="jComboBox_Account_Type" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <Component id="jButton_Submit" min="-2" pref="88" max="-2" attributes="0"/>
+                                  <Component id="jDateChooser_DOB" alignment="0" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jRadioButton_Gender_Male" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="jRadioButton_Gender_Female" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -110,30 +117,31 @@
                   <Component id="jLabel_Name" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jTextField_Name" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jTextField_EmailID" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel_EmailID" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="jTextField_EmailID" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel_DOB" min="-2" max="-2" attributes="0"/>
-                  <Component id="jDateChooser_DOB" min="-2" max="-2" attributes="0"/>
+                  <Component id="jDateChooser_DOB" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jLabel_Account_Type" min="-2" max="-2" attributes="0"/>
-                  <Component id="jComboBox_Account_Type" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel_Gender" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioButton_Gender_Male" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jRadioButton_Gender_Female" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jLabel_Account_Type" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jComboBox_Account_Type" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Component id="jButton_Back" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton_Submit" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jButton_Back" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton_Submit" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -283,6 +291,26 @@
       </Events>
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser_DOB">
+    </Component>
+    <Component class="javax.swing.JLabel" name="jLabel_Gender">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="0"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="2"/>
+        <Property name="text" type="java.lang.String" value="Gender"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="jRadioButton_Gender_Male">
+      <Properties>
+        <Property name="selected" type="boolean" value="true"/>
+        <Property name="text" type="java.lang.String" value="Male"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JRadioButton" name="jRadioButton_Gender_Female">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Female"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

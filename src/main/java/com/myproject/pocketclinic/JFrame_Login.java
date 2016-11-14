@@ -28,12 +28,11 @@ public class JFrame_Login extends javax.swing.JFrame
         setTitle("Login");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 400, 275));
-        setMaximumSize(new java.awt.Dimension(400, 275));
-        setMinimumSize(new java.awt.Dimension(400, 275));
+        setMaximumSize(new java.awt.Dimension(411, 178));
+        setMinimumSize(new java.awt.Dimension(411, 178));
         setName("Login"); // NOI18N
-        setPreferredSize(new java.awt.Dimension(400, 275));
         setResizable(false);
-        setSize(new java.awt.Dimension(400, 225));
+        setSize(new java.awt.Dimension(411, 178));
 
         jLabel_Login.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel_Login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -123,7 +122,7 @@ public class JFrame_Login extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton_SubmitActionPerformed
         // Get & Validate Username
         String username = jTextField_Username.getText().trim();
-        if(!CUser.IsValidUsername(username))
+        if(!CUtils.IsValidUser_Username(username))
         {
             JOptionPane.showMessageDialog
             (
@@ -137,7 +136,7 @@ public class JFrame_Login extends javax.swing.JFrame
 
         // Get & Validate Password
         String password = String.valueOf(jPasswordField_Password.getPassword()).trim();
-        if(!CUser.IsValidPassword(password))
+        if(!CUtils.IsValidUser_Password(password))
         {
             JOptionPane.showMessageDialog
             (
@@ -151,10 +150,19 @@ public class JFrame_Login extends javax.swing.JFrame
         password = CUtils.sha256(password);
         
         // Initialize Current User
-        CUser.cur_user = CUser.RetrieveUser(username, password);
+        CUser.cur_user = CUser.Retrieve(username, password);
         if(CUser.cur_user == null)
+        {
+            JOptionPane.showMessageDialog
+            (
+                null,
+                "Incorrect Username or Password!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
             return;
-        if(!CUser.cur_user.canlogin())
+        }
+        /*if(!CUser.cur_user.canlogin())
         {
             JOptionPane.showMessageDialog
             (
@@ -177,7 +185,10 @@ public class JFrame_Login extends javax.swing.JFrame
             CUser.cur_user.logout();
             //new JFrame_Home(this).setVisible(true);
             //this.setVisible(false);
-        }
+        }*/
+        new JFrame_Home().setVisible(true);
+        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_jButton_SubmitActionPerformed
 
     private void jButton_RegisterActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton_RegisterActionPerformed

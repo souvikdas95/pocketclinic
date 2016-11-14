@@ -31,15 +31,18 @@ public class JFrame_Register extends JFrame
         jLabel_EmailID = new javax.swing.JLabel();
         jTextField_EmailID = new javax.swing.JTextField();
         jDateChooser_DOB = new com.toedter.calendar.JDateChooser();
+        jLabel_Gender = new javax.swing.JLabel();
+        jRadioButton_Gender_Male = new javax.swing.JRadioButton();
+        jRadioButton_Gender_Female = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Register");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setMaximumSize(new java.awt.Dimension(400, 389));
-        setMinimumSize(new java.awt.Dimension(400, 389));
+        setMaximumSize(null);
+        setMinimumSize(new java.awt.Dimension(400, 345));
         setName("Register"); // NOI18N
         setResizable(false);
-        setSize(new java.awt.Dimension(400, 339));
+        setSize(new java.awt.Dimension(400, 346));
 
         jLabel_Login.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel_Login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -140,6 +143,15 @@ public class JFrame_Register extends JFrame
             }
         });
 
+        jLabel_Gender.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel_Gender.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel_Gender.setText("Gender");
+
+        jRadioButton_Gender_Male.setSelected(true);
+        jRadioButton_Gender_Male.setText("Male");
+
+        jRadioButton_Gender_Female.setText("Female");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -151,34 +163,39 @@ public class JFrame_Register extends JFrame
                         .addComponent(jLabel_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(64, 64, 64)
-                                .addComponent(jTextField_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(64, 64, 64)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jPasswordField_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_Username, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jPasswordField_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(64, 64, 64)
-                                    .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabel_Account_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel_DOB, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jButton_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(64, 64, 64)
+                                    .addComponent(jLabel_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(64, 64, 64)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jButton_Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jComboBox_Account_Type, 0, 108, Short.MAX_VALUE)
-                                        .addComponent(jDateChooser_DOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
+                                        .addComponent(jLabel_Account_Type, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel_DOB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel_Gender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(56, 56, 56)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBox_Account_Type, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButton_Submit, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jDateChooser_DOB, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jRadioButton_Gender_Male)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jRadioButton_Gender_Female, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                 .addGap(64, 64, 64))
         );
         layout.setVerticalGroup(
@@ -198,25 +215,27 @@ public class JFrame_Register extends JFrame
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_Name)
                     .addComponent(jTextField_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_EmailID)
-                    .addComponent(jTextField_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField_EmailID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_EmailID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel_DOB)
                     .addComponent(jDateChooser_DOB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_Gender)
+                    .addComponent(jRadioButton_Gender_Male)
+                    .addComponent(jRadioButton_Gender_Female))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel_Account_Type)
                     .addComponent(jComboBox_Account_Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Back))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton_Submit)))
+                    .addComponent(jButton_Back)
+                    .addComponent(jButton_Submit))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -252,7 +271,7 @@ public class JFrame_Register extends JFrame
     {//GEN-HEADEREND:event_jButton_SubmitActionPerformed
         // Get & Validate User Type
         byte type = (byte) jComboBox_Account_Type.getSelectedIndex();
-        if(!CUser.IsValidSelectedType(type))
+        if(!CUtils.IsValidUser_SelectedType(type))
         {
             JOptionPane.showMessageDialog
             (
@@ -266,7 +285,7 @@ public class JFrame_Register extends JFrame
 
         // Get & Validate Username
         String username = jTextField_Username.getText().trim();
-        if(!CUser.IsValidUsername(username))
+        if(!CUtils.IsValidUser_Username(username))
         {
             JOptionPane.showMessageDialog
             (
@@ -280,7 +299,7 @@ public class JFrame_Register extends JFrame
 
         // Get & Validate Password
         String password = String.valueOf(jPasswordField_Password.getPassword()).trim();
-        if(!CUser.IsValidPassword(password))
+        if(!CUtils.IsValidUser_Password(password))
         {
             JOptionPane.showMessageDialog
             (
@@ -295,7 +314,7 @@ public class JFrame_Register extends JFrame
         
         // Get & Validate Name
         String name = jTextField_Name.getText().trim();
-        if(!CUser.IsValidName(name))
+        if(!CUtils.IsValidUser_Name(name))
         {
             JOptionPane.showMessageDialog
             (
@@ -309,7 +328,7 @@ public class JFrame_Register extends JFrame
         
         // Get & Validate EmailID
         String email = jTextField_EmailID.getText().trim();
-        if(!CUser.IsValidEmail(email))
+        if(!CUtils.IsValidUser_Email(email))
         {
             JOptionPane.showMessageDialog
             (
@@ -336,8 +355,11 @@ public class JFrame_Register extends JFrame
         java.sql.Date DOB = new java.sql.Date(
                     jDateChooser_DOB.getCalendar().getTime().getTime());
         
+        // Get & Validate Gender
+        boolean gender = jRadioButton_Gender_Male.isSelected() ? false : true;
+        
         // Register User
-        if (CUser.RegisterUser(username, password, name, email, DOB, type))
+        if (CUser.Register(username, password, name, email, DOB, gender, type))
         {
             JOptionPane.showMessageDialog
             (
@@ -375,11 +397,14 @@ public class JFrame_Register extends JFrame
     private javax.swing.JLabel jLabel_Account_Type;
     private javax.swing.JLabel jLabel_DOB;
     private javax.swing.JLabel jLabel_EmailID;
+    private javax.swing.JLabel jLabel_Gender;
     private javax.swing.JLabel jLabel_Login;
     private javax.swing.JLabel jLabel_Name;
     private javax.swing.JLabel jLabel_Password;
     private javax.swing.JLabel jLabel_Username;
     private javax.swing.JPasswordField jPasswordField_Password;
+    private javax.swing.JRadioButton jRadioButton_Gender_Female;
+    private javax.swing.JRadioButton jRadioButton_Gender_Male;
     private javax.swing.JTextField jTextField_EmailID;
     private javax.swing.JTextField jTextField_Name;
     private javax.swing.JTextField jTextField_Username;
